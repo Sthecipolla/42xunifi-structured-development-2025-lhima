@@ -1,6 +1,6 @@
 #include "segmented_runs.h"
 
-static	int		ft_is_segment(int size,const int *arr)
+static	int		ft_is_segment(int size, const int *arr)
 {
 	int	pre;
 	int	index;
@@ -10,7 +10,8 @@ static	int		ft_is_segment(int size,const int *arr)
 		return FALSE;
 	index = 0;
 	pre = arr[index];
-	while(++index < size)
+	len = 1;
+	while(++index <= size)
 	{
 		if (pre < arr[index])
 			len++;
@@ -18,8 +19,7 @@ static	int		ft_is_segment(int size,const int *arr)
 			len = 0;
 		if(len == 3)
 			return TRUE;
-		if (size - index < 3 && len == 0)
-			return FALSE;
+		pre = arr[index];
 	}
 	return	(FALSE);
 	
@@ -34,12 +34,12 @@ int count_segments(const int *arr, int size)
 
 	pre_index = 0;
 	count = 0;
-	i = -1;
+	i = 0;
 	while (++i < size)
 	{
 		if(arr[i] == -1)
 		{
-			if (ft_is_segment(i - pre_index, &arr[pre_index]) == TRUE)
+			if (ft_is_segment(i - pre_index - 1, &arr[pre_index + 1]) == TRUE)
 				count ++;
 			pre_index = i;
 		}
@@ -50,8 +50,8 @@ int count_segments(const int *arr, int size)
 
 int main()
 {
-	int arr[] = {-1, 4, -1, 1, 2, 9, -1, 101, 104, 219, 222, 0, 0, -1};
+	int arr[] = {-1,-1,-1, 4, -1, 11, 2, 9, -1, 101, 104, 219, 222, 0, 0, -1,-1,-1};
 
-	printf("count: %d\n",	count_segments(arr, 14));
+	printf("count: %d\n",	count_segments(arr, 18));
 	return 0;
 }
