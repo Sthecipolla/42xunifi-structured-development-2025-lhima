@@ -1,14 +1,37 @@
 #ifndef FILESYSTEM_H
 # define FILESYSTEM_H
 
-#define TRUE 1
-#define FALSE 0
+# include <sys/time.h>
+# include <sys/wait.h>
+# include <stdio.h>
+# include <string.h>
+# include <limits.h>
+# include <unistd.h>
+# include <stdlib.h>
 
-#include <stdio.h>
+# define FILE 0L
+# define FOLDER 1L
 
-FSNode *create_file(const char *name, int size);
-FSNode *create_folder(const char *name);
-void add_child(FSNode *parent, FSNode *child);
-FSNode *get_children(const FSNode *parent);
-FSNode *get_sibling(const FSNode *node);
+enum	e_bool
+{
+	FALSE,
+	TRUE,
+};
+
+enum	e_message
+{
+	HELP,
+	ER_INPUT,
+};
+
+
+typedef struct s_FSNode
+{
+	char 			*name;
+	int 			type;
+	int 			size;
+	struct s_FSNode *father;
+	struct s_FSNode *children;
+}FSNode;
+
 #endif
